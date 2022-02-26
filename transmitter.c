@@ -3,11 +3,11 @@
 #include <stdint.h>
 #include <stdio.h>
 #include "filter.h"
-//#include "mio.h"
-//#include "utils.h"
+#include "mio.h"
+#include "utils.h"
 #include "isr.h"
-//#include "buttons.h"
-//#include "switches.h"
+#include "buttons.h"
+#include "switches.h"
 #include "transmitter.h"
 
 //START DEFINE STATEMENTS
