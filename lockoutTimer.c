@@ -85,6 +85,10 @@ void lockoutTimer_tick() {
 // the interval timer.
 bool lockoutTimer_runTest()
 {
+
+  isr_init();
+  isr_function();
+  
   intervalTimer_reset(INTERVAL_COUNT_NUM);
   // Start an interval timer,
   intervalTimer_start(INTERVAL_COUNT_NUM);
