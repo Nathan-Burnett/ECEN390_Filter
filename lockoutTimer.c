@@ -88,7 +88,7 @@ bool lockoutTimer_runTest()
 
   isr_init();
   isr_function();
-  
+
   intervalTimer_reset(INTERVAL_COUNT_NUM);
   // Start an interval timer,
   intervalTimer_start(INTERVAL_COUNT_NUM);
@@ -101,5 +101,5 @@ bool lockoutTimer_runTest()
   // Print out the time duration from the interval timer.
   uint16_t lock_duration = intervalTimer_getTotalDurationInSeconds(INTERVAL_COUNT_NUM);
 
-  printf(lock_duration, "\n");
+  printf("%d\n", lock_duration);
 }

@@ -1,5 +1,7 @@
 #include "hitLedTimer.h"
 #include "buttons.h"
+#include "trigger.h"
+#include "utils.h"
 #include "leds.h"
 #include "isr.h"
 #include "mio.h"
@@ -37,14 +39,14 @@ bool hitLedTimer_running()
 // Turns the gun's hit-LED on.
 void hitLedTimer_turnLedOn()
 {
-    mio_writePIN(LED_PIN_NUM, LED_ON);
+    mio_writePin(LED_PIN_NUM, LED_ON);
     leds_write(LED_ON);
 }
 
 // Turns the gun's hit-LED off.
 void hitLedTimer_turnLedOff()
 {
-    mio_writePIN(LED_PIN_NUM, LED_OFF);
+    mio_writePin(LED_PIN_NUM, LED_OFF);
     leds_write(LED_OFF);
 }
 
