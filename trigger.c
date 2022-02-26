@@ -8,6 +8,10 @@
 #include <stdio.h>
 #include <stdint.h>
 
+#define INIT_ST_MSG "init state\n"
+#define WAITING_FOR_CHANGE_ST_MSG "waiting_for_change_st\n"
+#define DEBOUNCE_ST_MSG "Debounce_st\n"
+
 #define ON true
 #define OFF false
 #define FULLY_LOADED 200
@@ -61,7 +65,6 @@ void trigger_setRemainingShotCount(trigger_shotsRemaining_t ammunition)
     //call this after every trigger pull?
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // States for the trigger state machine.
@@ -72,6 +75,35 @@ enum trigger_st_t {
 };
 static enum trigger_st_t currentState;
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// This is a debug state print routine. It will print the names of the states each
+// time tick() is called. It only prints states if they are different than the
+// previous state.
+void debugStatePrint() {
+  static enum trigger_st_t previousState;
+  static bool firstPass = true;
+  // Only print the message if:
+  // 1. This the first pass and the value for previousState is unknown.
+  // 2. previousState != currentState - this prevents reprinting the same state name over and over.
+  if (previousState != currentState || firstPass) {
+    firstPass = false;                // previousState will be defined, firstPass is false.
+    previousState = currentState;     // keep track of the last state that you were in.
+    switch(currentState) {            // This prints messages based upon the state that you were in.
+      case init_st:
+        printf(INIT_ST_MSG);
+        break;
+      case wait_for_change_st:
+        printf(WAITING_FOR_CHANGE_ST_MSG);
+        break;
+      case debounce_st:
+        printf(DEBOUNCE_ST_MSG);
+        break;
+     }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void trigger_init() {
   mio_setPinAsInput(TRIGGER_GUN_TRIGGER_MIO_PIN);
@@ -84,6 +116,10 @@ void trigger_init() {
 
 //standard tick function
 void trigger_tick() {  
+
+  //debugging function call
+  debugStatePrint();
+
   // Perform state update first.
   switch(currentState) {
     case init_st:
@@ -103,6 +139,10 @@ void trigger_tick() {
     case debounce_st:
       if(debounce_counter == DEBOUCE_MAX)
       {
+        if(current_trigger == TRIGGER_PULLED)
+          printf("D\n");
+        else
+          printf("U\n");
           previous_trigger = current_trigger;
           transmitter_run();
           currentState = wait_for_change_st;
@@ -130,4 +170,17 @@ void trigger_tick() {
 // Runs the test continuously until BTN1 is pressed.
 // The test just prints out a 'D' when the trigger or BTN0
 // is pressed, and a 'U' when the trigger or BTN0 is released.
-void trigger_runTest() {}
+void trigger_runTest() 
+{
+      // make a nice print out to the screen
+    printf("starting trigger_runTest()\n\r");
+    buttons_init(); // Using buttons
+    trigger_init(); // init the transmitter.
+    isr_init(); // init the isr
+    // don't use if we're doing the trigger test
+    // initialize the switch value variable here so we don't constantly make a new one
+    isr_function();
+    while (!(buttons_read() & BUTTONS_BTN1_MASK)) { // Run continuously until btn1 is pressed.}
+    // make a nice print out to the screen
+    printf("exiting trigger_runTest()\n\r");
+}

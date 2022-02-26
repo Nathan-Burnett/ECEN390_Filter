@@ -1,7 +1,7 @@
 
 #include "trigger.h"
-#include "supportFiles/globalTimer.h"
-#include "supportFiles/interrupts.h"
+#include "globalTimer.h"
+#include "interrupts.h"
 #include "hitLedTimer.h"
 #include "transmitter.h"
 #include "lockoutTimer.h"
@@ -26,7 +26,7 @@ void isr_init()
 void isr_function()
 {
     trigger_tick(); //Run the tick function for trigger
-    //hitLedTimer_tick(); //Run the tick function for the hitLedTimer
+    hitLedTimer_tick(); //Run the tick function for the hitLedTimer
     transmitter_tick(); //Run the tick funciton for transmitter_tick
-    //lockoutTimer_tick();    //Run the tick function for lockoutTimer
+    lockoutTimer_tick();    //Run the tick function for lockoutTimer
 }
