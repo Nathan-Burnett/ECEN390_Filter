@@ -1,9 +1,4 @@
-/*
- * transmitter.c
- *
- *  Created on: Feb 22, 2018
- *      Author: cammoguy
- */
+
 
 #include <stdint.h>
 #include <stdio.h>

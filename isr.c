@@ -1,9 +1,3 @@
-/*
- * isr.c
- *
- *  Created on: Feb 22, 2018
- *      Author: cammoguy
- */
 
 #include "trigger.h"
 #include "supportFiles/globalTimer.h"
