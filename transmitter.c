@@ -144,7 +144,7 @@ void transmitter_setFrequencyNumber(uint16_t frequencyNumber)
 
 //Debug statemachine for troubleshooting
 void debugTransmitterStatePrint() {
-    static transmitter_st_t transmitter_previousState;
+    static enum transmitter_st_t transmitter_previousState;
     static bool firstPass = true;
     // Only print the message if:
     // 1. This the first pass and the value for previousState is unknown.

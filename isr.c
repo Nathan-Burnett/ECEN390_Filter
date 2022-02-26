@@ -1,8 +1,8 @@
 
 #include "trigger.h"
-#include "globalTimer.h"
 #include "interrupts.h"
 #include "hitLedTimer.h"
+#include "xparameters.h"
 #include "transmitter.h"
 #include "lockoutTimer.h"
 #include "isr.h"
