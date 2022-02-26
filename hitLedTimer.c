@@ -8,6 +8,7 @@
 #define LED_ON 1
 #define LED_OFF 0
 #define LED_PIN_NUM 11
+#define DELAY_CONST 300
 
 static bool led_timer_on;
 static bool led_timer_check;
@@ -105,5 +106,29 @@ void hitLedTimer_tick() {
   }  
 }
 
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Runs a visual test of the hit LED.
+// The test continuously blinks the hit-led on and off.
+void hitLedTimer_runTest()
+{
+        // make a nice print out to the screen
+    printf("starting hitLedTimer_runTest()\n\r");
+    buttons_init(); // Using buttons
+    trigger_init(); // init the transmitter.
+    isr_init(); // init the isr
+    // don't use if we're doing the trigger test
+    // initialize the switch value variable here so we don't constantly make a new one
+    isr_function();
+    while (!(buttons_read() & BUTTONS_BTN1_MASK)) { // Run continuously until btn1 is pressed.
+    // Step 1: invoke hitLedTimer_start(),
+    hitLedTimer_start();
+    // Step 2: wait until hitLedTimer_running() is false (use another while-loop for this).
+    while(!hitLedTimer_running());
+    // Delay for 300 ms using utils_msDelay().
+    utils_msDelay(DELAY_CONST);
+    // Go back to Step 1.
+    }
+    // make a nice print out to the screen
+    printf("exiting hitLedTimer_runTest()\n\r");
+}

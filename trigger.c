@@ -180,7 +180,6 @@ void trigger_runTest()
     // don't use if we're doing the trigger test
     // initialize the switch value variable here so we don't constantly make a new one
     isr_function();
-    while (!(buttons_read() & BUTTONS_BTN1_MASK)) { // Run continuously until btn1 is pressed.}
-    // make a nice print out to the screen
+    while (!(buttons_read() & BUTTONS_BTN1_MASK));
     printf("exiting trigger_runTest()\n\r");
 }
