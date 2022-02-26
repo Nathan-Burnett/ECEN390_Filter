@@ -1,9 +1,12 @@
 #include "lockoutTimer.h"
+#include "intervalTimer.h"
+#include "buttons.h"
 #include "isr.h"
 #include <stdio.h>
 #include <stdint.h>
 
 #define COUNT_MAX 50000
+#define INTERVAL_COUNT_NUM 1
 
 static bool timer_on;
 static bool timer_check;
@@ -73,3 +76,26 @@ void lockoutTimer_tick() {
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Test function assumes interrupts have been completely enabled and
+// lockoutTimer_tick() function is invoked by isr_function().
+// Prints out pass/fail status and other info to console.
+// Returns true if passes, false otherwise.
+// This test uses the interval timer to determine correct delay for
+// the interval timer.
+bool lockoutTimer_runTest()
+{
+  intervalTimer_reset(INTERVAL_COUNT_NUM);
+  // Start an interval timer,
+  intervalTimer_start(INTERVAL_COUNT_NUM);
+  // Invoke lockoutTimer_start(),
+  lockoutTimer_start();
+  // Wait while lockoutTimer_running() is true (another while-loop),
+  while(lockoutTimer_running) {}
+  // Once lockoutTimer_running() is false, stop the interval timer,
+  intervalTimer_stop(INTERVAL_COUNT_NUM);
+  // Print out the time duration from the interval timer.
+  uint16_t lock_duration = intervalTimer_getTotalDurationInSeconds(INTERVAL_COUNT_NUM);
+
+  printf(lock_duration, "\n");
+}
