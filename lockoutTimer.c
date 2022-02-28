@@ -95,7 +95,7 @@ bool lockoutTimer_runTest()
   // Invoke lockoutTimer_start(),
   lockoutTimer_start();
   // Wait while lockoutTimer_running() is true (another while-loop),
-  while(lockoutTimer_running) {}
+  while(lockoutTimer_running()) {}
   // Once lockoutTimer_running() is false, stop the interval timer,
   intervalTimer_stop(INTERVAL_COUNT_NUM);
   // Print out the time duration from the interval timer.

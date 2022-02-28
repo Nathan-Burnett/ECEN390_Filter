@@ -25,8 +25,8 @@ void isr_init()
 // This function is invoked by the timer interrupt at 100 kHz.
 void isr_function()
 {
-    trigger_tick(); //Run the tick function for trigger
-    hitLedTimer_tick(); //Run the tick function for the hitLedTimer
-    transmitter_tick(); //Run the tick funciton for transmitter_tick
+    //trigger_tick(); //Run the tick function for trigger
+    //hitLedTimer_tick(); //Run the tick function for the hitLedTimer
+    //transmitter_tick(); //Run the tick funciton for transmitter_tick
     lockoutTimer_tick();    //Run the tick function for lockoutTimer
 }
